@@ -1,3 +1,4 @@
+//go:build linux || darwin
 // +build linux darwin
 
 package goTerminal
@@ -72,7 +73,7 @@ func CursorHome() {
 
 // Move cursor to upper left corner	hvhome
 func CursorLeftHome() {
-	fmt.Fprintf(Output, "%s[f", escape)
+	fmt.Fprintf(Output, "\x0d")
 }
 
 // CursorShow shows the cursor.
@@ -98,16 +99,16 @@ func Size() (*Coord, error) {
 
 	parts := strings.Split(string(out), " ")
 
-	x, err := strconv.Atoi(parts[0])
+	height, err := strconv.Atoi(parts[0])
 	if err != nil {
 		return nil, err
 	}
 
-	y, err := strconv.Atoi(strings.Replace(parts[1], "\n", "", 1))
+	width, err := strconv.Atoi(strings.Replace(parts[1], "\n", "", 1))
 	if err != nil {
 		return nil, err
 	}
 
-	return &Coord{Y: y, X: x}, nil
+	return &Coord{BufHeight: height, BufWidth: width, WinHeight: height, WinWidth: width}, nil
 
 }

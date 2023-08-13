@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package goTerminal
@@ -154,7 +155,7 @@ func CursorShow() {
 func CursorHide() {
 
 	C.hidecursor()
-	
+
 }
 
 // Size returns the height and width of the terminal.
@@ -167,8 +168,11 @@ func Size() (*Coord, error) {
 		return nil, err
 	}
 
-	return &Coord{Y: int(consoleInfo.Size.Y), X: int(consoleInfo.Size.X)}, nil
-
+	return &Coord{
+		BufWidth:  int(consoleInfo.Size.X),
+		BufHeight: int(consoleInfo.Size.Y),
+		WinWidth:  int(consoleInfo.Window.Right - consoleInfo.Window.Left + 1),
+		WinHeight: int(consoleInfo.Window.Bottom - consoleInfo.Window.Top + 1)}, nil
 }
 
 var savedCursorAttrs *CONSOLE_CURSOR_INFO

@@ -1,1 +1,1 @@
-module github.com/leandroveronezi/go-terminal
+module github.com/grufgran/go-terminal

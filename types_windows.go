@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package goTerminal
@@ -6,6 +7,13 @@ import "C"
 import (
 	"syscall"
 )
+
+type Coord struct {
+	BufHeight int
+	BufWidth  int
+	WinHeight int
+	WinWidth  int
+}
 
 var consoleInitial *CONSOLE_SCREEN_BUFFER_INFO
 

@@ -1,3 +1,4 @@
+//go:build linux || darwin
 // +build linux darwin
 
 package goTerminal
@@ -8,8 +9,10 @@ import (
 )
 
 type Coord struct {
-	X int
-	Y int
+	BufHeight int
+	BufWidth  int
+	WinHeight int
+	WinWidth  int
 }
 
 type Attribute int

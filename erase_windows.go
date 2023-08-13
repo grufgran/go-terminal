@@ -23,12 +23,18 @@ func EraseEndOfLine() {
 func EraseStartOfLine() {
 	fmt.Fprintf(Output, "%s[1K", escape)
 }
-
+*/
 // Erases the entire current line.
 func EraseLine() {
-	fmt.Fprintf(Output, "%s[2K", escape)
+	termSize, err := Size()
+	if err != nil {
+		return
+	}
+	CursorLeftHome()
+	fmt.print(strings.Repeat(" ", termSize.BufWidth))
 }
 
+/*
 // Erases the screen from the current line down to the bottom of the screen.
 func ScreenEraseDown() {
 	fmt.Fprintf(Output, "%s[J", escape)
